@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>NtripCaster Status Page</title>
+</head>
+
+@INCLUDE bodytag.html@
+
+<h1> Welcome to the NtripCaster Web Status Interface </h1>
+<p>
+This server is @SERVERNAME@, located in <a href="@URL@">@LOCATION@</a>, and run by @RPEMAIL@<br>
+Listening on port @PORT@, with the current limitations:<br>
+Listeners: @MAXLISTENERS@<br>
+Sources: @MAXSOURCES@<br>
+Max listeners per source: @MAXLISTENERSPERSOURCE@<br>
+Will throttle at @THROTTLE@ MB/s, and currently using @BANDWIDTH@ MB/s<br>
+@SERVERNAME@ has been up @UPTIME@, since @STARTTIME@.<br>
+</p>
+
+<p>
+Also acting as a http file server, streaming files from @STATICDIR@, they are accessible <a href="/file/">here</a>
+</p>
+
+<h3> Connected sources: @SOURCES@ </h3>
+<table border=0 cellspacing=0 cellpadding=3>
+  <tr><td>Mount</td><td>Host</td><td>Connected for</td><td>Clients</td><td>Song Title</td></tr>
+  @FOREACH i SOURCES@
+  @ODD i@
+  <tr bgcolor=#333333><td><a href="/playlist.pls?mount=@i.mount@&file=dummy.pls">@i.mount@</a></td><td>@i.host@</td><td>@i.connecttime@</td><td>@i.clients@</td><td>@i.streamtitle@</td></tr>
+  @EVEN i@
+  <tr bgcolor=#000000><td><a href="/playlist.pls?mount=@i.mount@&file=dummy.pls">@i.mount@</a></td><td>@i.host@</td><td>@i.connecttime@</td><td>@i.clients@</td><td>@i.streamtitle@</td></tr>
+  @ENDFOR i@
+</table>
+
+<hr>
+<h3> Connected Listeners: @LISTENERS@ </h3>
+<table>
+  <tr><td>Host</td><td>Bytes written</td><td>Connected for</td><td>User Agent</tr>
+  @FOREACH k LISTENERS@
+  @EVEN k@
+  <tr bgcolor=#000000><td><a href="/admin?mode=describe&id=@k.id@">@k.host@</a></td><td>@k.writebytes@</td><td>@k.connecttime@</td><td>@k.user_agent@</td></tr>
+  @ODD k@
+  <tr bgcolor=#333333><td><a href="/admin?mode=describe&id=@k.id@">@k.host@</a></td><td>@k.writebytes@</td><td>@k.connecttime@</td><td>@k.user_agent@</td></tr>
+  @ENDFOR k@
+</table>
+<hr>
+Template
+<!-- hhmts start -->
+Last modified: Thu Jul  1 16:27:29 MET DST 1999
+<!-- hhmts end -->
+</body> </html>
